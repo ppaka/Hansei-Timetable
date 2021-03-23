@@ -244,22 +244,22 @@ async def showHac3_error(ctx, error):
 
 @client.command(name='수업시간')
 async def stuTime(ctx):
-    embed = discord.Embed(title='줌 수업시간', description='조종례 까먹으면 안돼!!')
-    embed.add_field(name=f'1교시 {studyTime[0]}')
-    embed.add_field(name=f'2교시 {studyTime[1]}')
-    embed.add_field(name=f'3교시 {studyTime[2]}')
-    embed.add_field(name=f'4교시 {studyTime[3]}')
-    embed.add_field(name=f'점심시간 {studyTime[4]}')
-    embed.add_field(name=f'5교시 {studyTime[5]}')
-    embed.add_field(name=f'6교시 {studyTime[6]}')
-    embed.add_field(name=f'7교시 {studyTime[7]}')
+    embed = discord.Embed(title='수업시간', description='조종례 까먹으면 안돼!!', color=0x86e57f)
+    embed.add_field(name='1교시', value=studyTime[0], inline=False)
+    embed.add_field(name='2교시', value=studyTime[1], inline=False)
+    embed.add_field(name='3교시', value=studyTime[2], inline=False)
+    embed.add_field(name='4교시', value=studyTime[3], inline=False)
+    embed.add_field(name='점심시간', value=studyTime[4], inline=False)
+    embed.add_field(name='5교시', value=studyTime[5], inline=False)
+    embed.add_field(name='6교시', value=studyTime[6], inline=False)
+    embed.add_field(name='7교시', value=studyTime[7], inline=False)
     await ctx.send(embed=embed)
 
 
 @client.command(name='도움말', pass_context=True)
 async def help(ctx):
     embedhelp = discord.Embed(
-        title='도움말', description='명령어 모음', color=0xff00ff)
+        title='도움말', description='명령어 모음', color=0xffb2f5)
     embedhelp.add_field(
         name='!시간표 게임', value='게임 1반 시간표', inline=False)
     embedhelp.add_field(
