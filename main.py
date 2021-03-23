@@ -22,6 +22,7 @@ async def on_ready():
     print('--------')
     await client.change_presence(activity=discord.Game(name='!시간표 도움말'))
 
+
 @client.command(name='게임', pass_context=True)
 async def showGame(ctx, day):
     r = ""
@@ -53,6 +54,7 @@ async def showGame(ctx, day):
             for i in sj:
                 embed.add_field(name=f'{subjectlist[i]}',value=f'{sjzoomid[i]}\n{sjzoomlink+sjzoomid[i]}', inline=False)
     await ctx.send(embed=embed)
+
 
 @client.command(name='해킹1', pass_context=True)
 async def showHac1(ctx, day):
@@ -154,6 +156,7 @@ async def showHac3(ctx, day):
                 else: embed.add_field(name=f'{subjectlist[i]}',value=f'{sjzoomid[i]}\n{sjzoomlink+sjzoomid[i]}', inline=False)
     await ctx.send(embed=embed)
 
+
 @showGame.error
 async def showGame_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
@@ -173,6 +176,7 @@ async def showGame_error(ctx, error):
                     embed.add_field(name=f'{subjectlist[i]}',value=f'{sjzoomid[i]}\n{sjzoomlink+sjzoomid[i]}', inline=False)
         await ctx.send(embed=embed)
 
+
 @showHac1.error
 async def showHac1_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
@@ -190,6 +194,7 @@ async def showHac1_error(ctx, error):
                 for i in sj:
                     embed.add_field(name=f'{subjectlist[i]}',value=f'{sjzoomid[i]}\n{sjzoomlink+sjzoomid[i]}', inline=False)
         await ctx.send(embed=embed)
+
 
 @showHac2.error
 async def showHac2_error(ctx, error):
@@ -210,6 +215,7 @@ async def showHac2_error(ctx, error):
                         embed.add_field(name=f'{subjectlist[i]}',value=f'9979120043\n{sjzoomlink}9979120043', inline=False)
                     else: embed.add_field(name=f'{subjectlist[i]}',value=f'{sjzoomid[i]}\n{sjzoomlink+sjzoomid[i]}', inline=False)
         await ctx.send(embed=embed)
+
 
 @showHac3.error
 async def showHac3_error(ctx, error):
@@ -232,6 +238,7 @@ async def showHac3_error(ctx, error):
                     else: embed.add_field(name=f'{subjectlist[i]}',value=f'{sjzoomid[i]}\n{sjzoomlink+sjzoomid[i]}', inline=False)
         await ctx.send(embed=embed)
 
+
 @client.command(name='도움말', pass_context=True)
 async def help(ctx):
     embedhelp = discord.Embed(
@@ -248,19 +255,5 @@ async def help(ctx):
         name='요일 시간표 보는법', value='!시간표 (반) (월요일)와 같이 치면 해당 요일의 시간표가 나옵니다!', inline=False)
     await ctx.send(embed=embedhelp)
 
-
-# @tasks.loop(seconds=1.0)
-# async def loopTask(self):
-
-#     # 월요일
-#     if today == 0:
-#         if hour == 8 and min == 30 and sec == 0:
-#             embed = discord.Embed(
-#             title='알림!', description=f'지금은 {self.daylist[today]}요일 {hour}시 {min}분입니다.', color=0xffffff)
-#             embed.add_field(name='10분 뒤 과목은', value=f'{self.subjectlist[0]}', inline=False)
-#             embed.add_field(name='줌 아이디는', value=f'{self.sjzoomid[0]}', inline=False)
-#             id = f'{self.sjzoomid[0]}'.replace(' ', '')
-#             embed.add_field(name='줌 링크!', value=f'{self.sjzoomlink+id}', inline=False)
-#             await channel.send(embed=embed)
 
 client.run('ODE4ODAwNTgxMzkxOTQxNjQ5.YEdVdw.hoIfa3xTPa-SOIh-lqFvfFrB9I0')
