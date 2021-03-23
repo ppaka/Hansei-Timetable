@@ -11,8 +11,11 @@ subjectlist = ['컴그', '국어', '영어', '사회', '국사',  # 0컴그 1국
                 '디자', '체육', '자율', '정처', '파이썬'] # 10디자 11체육 12자율 13정처 14파이썬
 sjzoomid = ['3519714354', '5316963430', '9749762480', '4582652826', '4186922475',
              '2608361619', '2742234806', '3149113899', '3411838871', '3737697752',
-             '3519714354', '5178577141', '존재하지않음', '2797188506', '7271742487']
+             '3519714354', '5178577141', '줌 아이디가 없습니다', '2797188506', '7271742487']
 sjzoomlink = 'https://zoom.us/j/'
+studyTime = ['08:40 ~ 09:20', '09:30 ~ 10:10',
+ '10:20 ~ 11:00', '11:10 ~ 11:50', '12:00 ~ 12:40', 
+ '12:50 ~ 13:30', '13:40 ~ 14:20', '14:30 ~ 15:10']
 
 
 @client.event
@@ -239,20 +242,36 @@ async def showHac3_error(ctx, error):
         await ctx.send(embed=embed)
 
 
+@client.command(name='수업시간')
+async def stuTime(ctx):
+    embed = discord.Embed(title='줌 수업시간', description='조종례 까먹으면 안돼!!')
+    embed.add_field(name=f'1교시 {studyTime[0]}')
+    embed.add_field(name=f'2교시 {studyTime[1]}')
+    embed.add_field(name=f'3교시 {studyTime[2]}')
+    embed.add_field(name=f'4교시 {studyTime[3]}')
+    embed.add_field(name=f'점심시간 {studyTime[4]}')
+    embed.add_field(name=f'5교시 {studyTime[5]}')
+    embed.add_field(name=f'6교시 {studyTime[6]}')
+    embed.add_field(name=f'7교시 {studyTime[7]}')
+    await ctx.send(embed=embed)
+
+
 @client.command(name='도움말', pass_context=True)
 async def help(ctx):
     embedhelp = discord.Embed(
         title='도움말', description='명령어 모음', color=0xff00ff)
     embedhelp.add_field(
-        name='!시간표 게임', value='게임 1반 시간표를 보여줍니다', inline=False)
+        name='!시간표 게임', value='게임 1반 시간표', inline=False)
     embedhelp.add_field(
-        name='!시간표 해킹1', value='해킹보안 1반 시간표를 보여줍니다', inline=False)
+        name='!시간표 해킹1', value='해킹보안 1반 시간표', inline=False)
     embedhelp.add_field(
-        name='!시간표 해킹2', value='해킹보안 2반 시간표를 보여줍니다', inline=False)
+        name='!시간표 해킹2', value='해킹보안 2반 시간표', inline=False)
     embedhelp.add_field(
-        name='!시간표 해킹3', value='해킹보안 3반 시간표를 보여줍니다', inline=False)
+        name='!시간표 해킹3', value='해킹보안 3반 시간표', inline=False)
     embedhelp.add_field(
-        name='요일 시간표 보는법', value='!시간표 (반) (월요일)와 같이 치면 해당 요일의 시간표가 나옵니다!', inline=False)
+        name='!시간표 수업시간', value='수업시간을 보여주는 명령어야!', inline=False)
+    embedhelp.add_field(
+        name='요일 시간표 보는법', value='!시간표 (반) (월요일)와 같이 치면 해당 요일의 시간표가 나와!', inline=False)
     await ctx.send(embed=embedhelp)
 
 
