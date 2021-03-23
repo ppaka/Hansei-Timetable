@@ -1,0 +1,94 @@
+{
+    "classGame": [
+        {
+            "subjects": [6,6,5,1,12,12]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": [0,0,6,6,7,4,3]
+        },
+        {
+            "subjects": [5,4,8,9,3,10,2]
+        },
+        {
+            "subjects": [2,7,1,4,10,10,11]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        }
+    ],
+    "classHac1": [
+        {
+            "subjects": [13,13,14,14,12,12]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": [3,5,14,14,10,10,7]
+        },
+        {
+            "subjects": [13,13,4,1,9,2,11]
+        },
+        {
+            "subjects": [8,2,5,3,1,7,4]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        }
+    ],
+    "classHac2": [
+        {
+            "subjects": [14,14,1,2,12,12]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": [5,1,4,3,2,14,14]
+        },
+        {
+            "subjects": [3,10,10,7,4,9,1]
+        },
+        {
+            "subjects": [10,13,13,2,7,11,5]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        }
+    ],
+    "classHac3": [
+        {
+            "subjects": [2,11,10,10,12,12]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": [14,14,7,4,1,13,13]
+        },
+        {
+            "subjects": [4,1,9,2,5,7,3]
+        },
+        {
+            "subjects": [4,1,3,5,8,13,13]
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        }
+    ]
+}
