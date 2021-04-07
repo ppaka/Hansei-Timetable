@@ -6,16 +6,16 @@ from discord.ext import commands
 
 client = commands.Bot(command_prefix='!시간표 ')
 daylist = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
-subjectlist = ['컴그', '국어', '영어', '사회', '국사',  # 0컴그 1국어 2영어 3사회 4국사
-                '수학', '프로', '과학', '진로', '음악', # 5수학 6프로 7과학 8진로 9음악
+subjectlist = ['컴그', '국어', '영어', '사회', '국사',    # 0컴그 1국어 2영어 3사회 4국사
+                '수학', '프로', '과학', '진로', '음악',   # 5수학 6프로 7과학 8진로 9음악
                 '디자', '체육', '자율', '정처', '파이썬'] # 10디자 11체육 12자율 13정처 14파이썬
 sjzoomid = ['3519714354', '5316963430', '9749762480', '4582652826', '4186922475',
              '2608361619', '2742234806', '3149113899', '3411838871', '3737697752',
              '3519714354', '5178577141', '줌 아이디가 없습니다', '2797188506', '7271742487']
 sjzoomlink = 'https://zoom.us/j/'
-studyTime = ['08:40 ~ 09:20', '09:30 ~ 10:10',
- '10:20 ~ 11:00', '11:10 ~ 11:50', '12:00 ~ 12:40', 
- '12:50 ~ 13:30', '13:40 ~ 14:20', '14:30 ~ 15:10']
+studyTime = ['08:40 - 09:25', '09:35 - 10:20',
+ '10:30 - 11:15', '11:15 - 12:15', '12:15 - 13:00', 
+ '13:10 - 13:55', '14:05 - 14:50', '15:00 - 15:45']
 
 
 @client.event
@@ -248,8 +248,8 @@ async def stuTime(ctx):
     embed.add_field(name='1교시', value=studyTime[0], inline=False)
     embed.add_field(name='2교시', value=studyTime[1], inline=False)
     embed.add_field(name='3교시', value=studyTime[2], inline=False)
-    embed.add_field(name='4교시', value=studyTime[3], inline=False)
-    embed.add_field(name='점심시간', value=studyTime[4], inline=False)
+    embed.add_field(name='점심시간', value=studyTime[3], inline=False)
+    embed.add_field(name='4교시', value=studyTime[4], inline=False)
     embed.add_field(name='5교시', value=studyTime[5], inline=False)
     embed.add_field(name='6교시', value=studyTime[6], inline=False)
     embed.add_field(name='7교시', value=studyTime[7], inline=False)
