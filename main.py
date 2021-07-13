@@ -172,7 +172,7 @@ async def show(ctx, optone: str, day: str):
                                         inline=False)
             await ctx.send(embed=embed)
     elif optone == "수업시간":
-        embed = discord.Embed(title='수업시간', description='조종례 까먹으면 안돼!!', color=0xFFA7A7)
+        embed = discord.Embed(title='수업시간', description='『조종례는 알잘딱』', color=0xFFA7A7)
         embed.add_field(name='1교시', value=studyTime[0], inline=False)
         embed.add_field(name='2교시', value=studyTime[1], inline=False)
         embed.add_field(name='3교시', value=studyTime[2], inline=False)
