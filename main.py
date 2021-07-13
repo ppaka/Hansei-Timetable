@@ -88,7 +88,7 @@ async def on_ready():
                      ]
                  )
              ])
-async def show(ctx, optone: str, day: str):
+async def show(ctx, optone: str, day: str = ""):
     r = datetime.datetime.today().weekday()
     if day == "월요일":
         r = 0
