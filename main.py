@@ -7,17 +7,19 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 client = discord.Client(intents=discord.Intents.default())
 slash = SlashCommand(client, sync_commands=True)
 
+
+dataDictionary = {'컴그': ['컴그', '351 971 4354'], '국어': ['국어', '531 696 3430'], '영어': ['영어', '974 976 2480'], '사회': ['사회', '458 265 2826'], '국사': ['국사', '418 692 2475'], '수학': ['수학', '260 836 1619'],
+                  '프로': ['프로', '274 223 4806'], '과학': ['과학', '314 911 3899'], '진로': ['진로', '341 183 8871'], '음악': ['음악', '373 769 7752'], '디자': ['디자', '351 971 4354'], '체육': ['체육', '517 857 7141'],
+                  '자율': ['', ''], '정처': ['', ''], '파이썬': ['파이썬', '997 912 0043'], '컴시': ['컴시', '279 718 8506'], '소양': ['소양', '458 265 2826']}
+
+
 daylist = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
-subjectlist = ['컴그', '국어', '영어', '사회', '국사',  # 0컴그 1국어 2영어 3사회 4국사
-               '수학', '프로', '과학', '진로', '음악',  # 5수학 6프로 7과학 8진로 9음악
-               '디자', '체육', '자율', '정처', '파이썬']  # 10디자 11체육 12자율 13정처 14파이썬
-sjzoomid = ['3519714354', '5316963430', '9749762480', '4582652826', '4186922475',
-            '2608361619', '2742234806', '3149113899', '3411838871', '3737697752',
-            '3519714354', '5178577141', '줌 아이디가 없습니다', '2797188506', '7271742487']
-sjzoomlink = 'https://zoom.us/j/'
-studyTime = ['08:40 - 09:20', '09:30 - 10:10',
-             '10:20 - 11:00', '11:10 - 11:50', '12:00 - 12:40',
-             '12:50 - 13:30', '13:40 - 14:20', '14:30 - 15:10']
+
+zoomLink = 'https://zoom.us/j/'
+
+studyTime = ['08:40 - 09:30', '09:40 - 10:30',
+             '10:40 - 11:30', '11:30 - 12:20', '12:20 - 13:10',
+             '13:20 - 14:10', '14:20 - 15:10', '15:20 - 16:10']
 
 
 @client.event
@@ -115,10 +117,12 @@ async def show(ctx, optone: str, day: str = ""):
             else:
                 embed = discord.Embed(
                     title='게임과 1-1', description=f'{daylist[r]} 게임 1반 시간표 입니다!', color=0xFFB2D9)
-                embed.add_field(name=f'아침조회: {subjectlist[7]}', value=f'{sjzoomid[7]}\n{sjzoomlink + sjzoomid[7]}')
+                embed.add_field(
+                    name=f'아침조회', value=f'{dataDictionary["과학"][1]}\n{zoomLink + (dataDictionary["과학"][1].replace(" ", ""))}')
                 for i in sj:
-                    embed.add_field(name=f'{subjectlist[i]}', value=f'{sjzoomid[i]}\n{sjzoomlink + sjzoomid[i]}',
+                    embed.add_field(name=f'{dataDictionary[i][0]}', value=f'{dataDictionary[i][1]}\n{zoomLink + (dataDictionary[i][1].replace(" ", ""))}',
                                     inline=False)
+            embed.set_footer(text='by paka#8285')
             await ctx.send(embed=embed)
     elif optone == "해킹1":
         with open('data.json') as jsonFile:
@@ -131,8 +135,9 @@ async def show(ctx, optone: str, day: str = ""):
                 embed = discord.Embed(
                     title='해킹보안 1-1', description=f'{daylist[r]} 해킹보안 1반 시간표 입니다!', color=0xB5B2FF)
                 for i in sj:
-                    embed.add_field(name=f'{subjectlist[i]}', value=f'{sjzoomid[i]}\n{sjzoomlink + sjzoomid[i]}',
+                    embed.add_field(name=f'{dataDictionary[i][0]}', value=f'{dataDictionary[i][1]}\n{zoomLink + (dataDictionary[i][1].replace(" ", ""))}',
                                     inline=False)
+            embed.set_footer(text='by paka#8285')
             await ctx.send(embed=embed)
     elif optone == "해킹2":
         with open('data.json') as jsonFile:
@@ -145,12 +150,9 @@ async def show(ctx, optone: str, day: str = ""):
                 embed = discord.Embed(
                     title='해킹보안 1-2', description=f'{daylist[r]} 해킹보안 2반 시간표 입니다!', color=0xCEF279)
                 for i in sj:
-                    if i == 14:
-                        embed.add_field(name=f'{subjectlist[i]}', value=f'9979120043\n{sjzoomlink}9979120043',
-                                        inline=False)
-                    else:
-                        embed.add_field(name=f'{subjectlist[i]}', value=f'{sjzoomid[i]}\n{sjzoomlink + sjzoomid[i]}',
-                                        inline=False)
+                    embed.add_field(name=f'{dataDictionary[i][0]}', value=f'{dataDictionary[i][1]}\n{zoomLink + (dataDictionary[i][1].replace(" ", ""))}',
+                                    inline=False)
+            embed.set_footer(text='by paka#8285')
             await ctx.send(embed=embed)
     elif optone == "해킹3":
         with open('data.json') as jsonFile:
@@ -162,17 +164,16 @@ async def show(ctx, optone: str, day: str = ""):
             else:
                 embed = discord.Embed(
                     title='해킹보안 1-3', description=f'{daylist[r]} 해킹보안 3반 시간표 입니다!', color=0xFFC19E)
-                embed.add_field(name=f'아침조회: {subjectlist[4]}', value=f'{sjzoomid[4]}\n{sjzoomlink + sjzoomid[4]}')
+                embed.add_field(
+                    name=f'아침조회', value=f'{dataDictionary["국사"][1]}\n{zoomLink + (dataDictionary["국사"][1].replace(" ", ""))}')
                 for i in sj:
-                    if i == 14:
-                        embed.add_field(name=f'{subjectlist[i]}', value=f'9979120043\n{sjzoomlink}9979120043',
-                                        inline=False)
-                    else:
-                        embed.add_field(name=f'{subjectlist[i]}', value=f'{sjzoomid[i]}\n{sjzoomlink + sjzoomid[i]}',
-                                        inline=False)
+                    embed.add_field(name=f'{dataDictionary[i][0]}', value=f'{dataDictionary[i][1]}\n{zoomLink + (dataDictionary[i][1].replace(" ", ""))}',
+                                    inline=False)
+            embed.set_footer(text='by paka#8285')
             await ctx.send(embed=embed)
     elif optone == "수업시간":
-        embed = discord.Embed(title='수업시간', description='『조종례는 알잘딱』', color=0xFFA7A7)
+        embed = discord.Embed(
+            title='수업시간', description='『조종례는 알잘딱』', color=0xFFA7A7)
         embed.add_field(name='1교시', value=studyTime[0], inline=False)
         embed.add_field(name='2교시', value=studyTime[1], inline=False)
         embed.add_field(name='3교시', value=studyTime[2], inline=False)
@@ -181,6 +182,7 @@ async def show(ctx, optone: str, day: str = ""):
         embed.add_field(name='5교시', value=studyTime[5], inline=False)
         embed.add_field(name='6교시', value=studyTime[6], inline=False)
         embed.add_field(name='7교시', value=studyTime[7], inline=False)
+        embed.set_footer(text='by paka#8285')
         await ctx.send(embed=embed)
 
 
