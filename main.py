@@ -197,4 +197,3 @@ async def show(ctx, optone: str, day: str = ""):
         await ctx.send(embed=embed)
 
 client.run(token)
-# client.run("NzM1MTA2NjA1NDM1MDYwMjI1.XxbbYA.qpDbsDm-8vxI5Gy7bvKGrfDg7Ac")
