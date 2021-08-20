@@ -7,6 +7,17 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 client = discord.Client(intents=discord.Intents.default())
 slash = SlashCommand(client, sync_commands=True)
 
+tokenFile = open('token', 'r')
+token = tokenFile.read()
+
+if (token == ''):
+    print('토큰값이 비어있습니다. 파일 "token" 을 생성하고 토큰을 작성해주세요.')
+else:
+    print('읽어온 토큰: ' + token)
+
+tokenFile.close()
+
+
 
 dataDictionary = {'컴그': ['컴그', '351 971 4354'], '국어': ['국어', '531 696 3430'], '영어': ['영어', '974 976 2480'], '사회': ['사회', '458 265 2826'], '국사': ['국사', '418 692 2475'], '수학': ['수학', '531 978 5696'],
                   '프로': ['프로', '274 223 4806'], '과학': ['과학', '314 911 3899'], '진로': ['진로', '341 183 8871'], '음악': ['음악', '373 769 7752'], '디자': ['디자', '351 971 4354'], '체육': ['체육', '517 857 7141'],
@@ -185,6 +196,5 @@ async def show(ctx, optone: str, day: str = ""):
         embed.set_footer(text='by paka#8285')
         await ctx.send(embed=embed)
 
-
-client.run('ODE4ODAwNTgxMzkxOTQxNjQ5.YEdVdw.hoIfa3xTPa-SOIh-lqFvfFrB9I0')
+client.run(token)
 # client.run("NzM1MTA2NjA1NDM1MDYwMjI1.XxbbYA.qpDbsDm-8vxI5Gy7bvKGrfDg7Ac")
