@@ -1,6 +1,9 @@
 {
     "classGame": [
         {
+            "subjects": ""
+        },
+        {
             "subjects": [
                 "디자",
                 "국사",
@@ -54,12 +57,12 @@
         },
         {
             "subjects": ""
-        },
-        {
-            "subjects": ""
         }
     ],
     "classHac1": [
+        {
+            "subjects": ""
+        },
         {
             "subjects": [
                 "파이썬1",
@@ -114,12 +117,12 @@
         },
         {
             "subjects": ""
-        },
-        {
-            "subjects": ""
         }
     ],
     "classHac2": [
+        {
+            "subjects": ""
+        },
         {
             "subjects": [
                 "영어",
@@ -174,12 +177,12 @@
         },
         {
             "subjects": ""
-        },
-        {
-            "subjects": ""
         }
     ],
     "classHac3": [
+        {
+            "subjects": ""
+        },
         {
             "subjects": [
                 "사회",
@@ -231,9 +234,6 @@
                 "사회",
                 "영어"
             ]
-        },
-        {
-            "subjects": ""
         },
         {
             "subjects": ""
