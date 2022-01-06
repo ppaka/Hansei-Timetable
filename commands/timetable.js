@@ -36,70 +36,77 @@ module.exports = {
 			date = argsDay.value;
 		}
 
-		const jsonFile = fs.readFileSync('./timetables.json', 'utf8');
+		fs.readFile('./timetables.json', 'utf8', (err, data) => {
+			if (err != null) {
+				console.error(err);
+				interaction.reply({ content: '명령을 실행하는데 오류가 발생하였습니다...', ephemeral: true });
+			} else {
+				const jsonData = JSON.parse(data);
 
-		if (argsClass.value == '게임') {
-			const classData = JSON.parse(jsonFile).classGame;
+				if (argsClass.value == '게임') {
+					const classData = jsonData.classGame;
 
-			if (classData == null) {
-				const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
-				interaction.reply({ embeds: [errorEmbed] });
-			}
-			else {
-				const embed = new MessageEmbed().setColor('#FFB2D9').setTitle('게임과 1-1').setDescription(`${daylist[date]} 게임 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-				classData[date].subjects.forEach(subject => {
-					embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-				});
+					if (classData == null) {
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
+						interaction.reply({ embeds: [errorEmbed] });
+					}
+					else {
+						const embed = new MessageEmbed().setColor('#FFB2D9').setTitle('게임과 1-1').setDescription(`${daylist[date]} 게임 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						classData[date].subjects.forEach(subject => {
+							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+						});
 
-				interaction.reply({ embeds: [embed] });
-			}
-		}
-		else if (argsClass.value == '해킹1') {
-			const classData = JSON.parse(jsonFile).classHac1;
-			if (classData == null) {
-				const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-				interaction.reply({ embeds: [errorEmbed] });
-			}
-			else {
-				const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('해킹보안 1-1').setDescription(`${daylist[date]} 해킹보안 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-				classData[date].subjects.forEach(subject => {
-					embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-				});
+						interaction.reply({ embeds: [embed] });
+					}
+				}
+				else if (argsClass.value == '해킹1') {
+					const classData = jsonData.classHac1;
+					if (classData == null) {
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+						interaction.reply({ embeds: [errorEmbed] });
+					}
+					else {
+						const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('해킹보안 1-1').setDescription(`${daylist[date]} 해킹보안 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						classData[date].subjects.forEach(subject => {
+							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+						});
 
-				interaction.reply({ embeds: [embed] });
-			}
-		}
-		else if (argsClass.value == '해킹2') {
-			const classData = JSON.parse(jsonFile).classHac2;
-			if (classData == null) {
-				const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-				interaction.reply({ embeds: [errorEmbed] });
-			}
-			else {
-				const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹보안 1-2').setDescription(`${daylist[date]} 해킹보안 2반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						interaction.reply({ embeds: [embed] });
+					}
+				}
+				else if (argsClass.value == '해킹2') {
+					const classData = jsonData.classHac2;
+					if (classData == null) {
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+						interaction.reply({ embeds: [errorEmbed] });
+					}
+					else {
+						const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹보안 1-2').setDescription(`${daylist[date]} 해킹보안 2반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
 
-				classData[date].subjects.forEach(subject => {
-					embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-				});
+						classData[date].subjects.forEach(subject => {
+							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+						});
 
-				interaction.reply({ embeds: [embed] });
-			}
-		}
-		else if (argsClass.value == '해킹3') {
-			const classData = JSON.parse(jsonFile).classHac3;
-			if (classData == null) {
-				const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-				interaction.reply({ embeds: [errorEmbed] });
-			}
-			else {
-				const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹보안 1-3').setDescription(`${daylist[date]} 해킹보안 3반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						interaction.reply({ embeds: [embed] });
+					}
+				}
+				else if (argsClass.value == '해킹3') {
+					const classData = jsonData.classHac3;
+					if (classData == null) {
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+						interaction.reply({ embeds: [errorEmbed] });
+					}
+					else {
+						const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹보안 1-3').setDescription(`${daylist[date]} 해킹보안 3반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
 
-				classData[date].subjects.forEach(subject => {
-					embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-				});
+						classData[date].subjects.forEach(subject => {
+							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+						});
 
-				interaction.reply({ embeds: [embed] });
+						interaction.reply({ embeds: [embed] });
+					}
+				}
 			}
-		}
+		});
 	},
 };
