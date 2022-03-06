@@ -57,13 +57,20 @@ module.exports = {
 						interaction.reply({ embeds: [errorEmbed] });
 					}
 					else {
-						const embed = new MessageEmbed().setColor('#FFB2D9').setTitle('게임과 2-1').setDescription(`${daylist[date]} 게임 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-						classData[date].subjects.forEach(subject => {
-							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-							// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-						});
+						if (classData[date].subjects == "") {
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
+							interaction.reply({ embeds: [errorEmbed] });
+						}
+						else {
+							const embed = new MessageEmbed().setColor('#FFB2D9').setTitle('게임과 2-1').setDescription(`${daylist[date]} 게임 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+							classData[date].subjects.forEach(subject => {
+								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
+								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+							});
 
-						interaction.reply({ embeds: [embed] });
+							interaction.reply({ embeds: [embed] });
+						}
+
 					}
 				}
 				else if (argsClass.value == '해킹1') {
@@ -73,13 +80,18 @@ module.exports = {
 						interaction.reply({ embeds: [errorEmbed] });
 					}
 					else {
-						const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('해킹보안 1-1').setDescription(`${daylist[date]} 해킹보안 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-						classData[date].subjects.forEach(subject => {
-							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-							// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-						});
-
-						interaction.reply({ embeds: [embed] });
+						if (classData[date].subjects == "") {
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+							interaction.reply({ embeds: [errorEmbed] });
+						}
+						else {
+							const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('해킹보안 1-1').setDescription(`${daylist[date]} 해킹보안 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+							classData[date].subjects.forEach(subject => {
+								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
+								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+							});
+							interaction.reply({ embeds: [embed] });
+						}
 					}
 				}
 				else if (argsClass.value == '해킹2') {
@@ -89,14 +101,21 @@ module.exports = {
 						interaction.reply({ embeds: [errorEmbed] });
 					}
 					else {
-						const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹보안 1-2').setDescription(`${daylist[date]} 해킹보안 2반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						if (classData[date].subjects == "") {
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+							interaction.reply({ embeds: [errorEmbed] });
 
-						classData[date].subjects.forEach(subject => {
-							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-							// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-						});
+						} else {
+							const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹보안 1-2').setDescription(`${daylist[date]} 해킹보안 2반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
 
-						interaction.reply({ embeds: [embed] });
+							classData[date].subjects.forEach(subject => {
+								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
+								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+							});
+
+							interaction.reply({ embeds: [embed] });
+						}
+
 					}
 				}
 				else if (argsClass.value == '해킹3') {
@@ -106,14 +125,20 @@ module.exports = {
 						interaction.reply({ embeds: [errorEmbed] });
 					}
 					else {
-						const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹보안 1-3').setDescription(`${daylist[date]} 해킹보안 3반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						if (classData[date].subjects == "") {
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+							interaction.reply({ embeds: [errorEmbed] });
+						}
+						else {
+							const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹보안 1-3').setDescription(`${daylist[date]} 해킹보안 3반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
 
-						classData[date].subjects.forEach(subject => {
-							embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-							// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-						});
+							classData[date].subjects.forEach(subject => {
+								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
+								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+							});
 
-						interaction.reply({ embeds: [embed] });
+							interaction.reply({ embeds: [embed] });
+						}
 					}
 				}
 			}
