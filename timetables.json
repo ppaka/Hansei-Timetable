@@ -59,6 +59,29 @@
             "subjects": ""
         }
     ],
+    "classNet1": [
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        },
+        {
+            "subjects": ""
+        }
+    ],
     "classHac1": [
         {
             "subjects": ""
@@ -87,42 +110,19 @@
             "subjects": ""
         },
         {
-            "subjects": ""
+            "subjects": ["정보", "정보", "컴시", "문학", "자바", "실수", "영어"]
         },
         {
-            "subjects": ""
+            "subjects": ["영어","문학","체육1","공업"]
         },
         {
-            "subjects": ""
+            "subjects": ["보건","자바","자바","수학","컴네","컴네","컴네"]
         },
         {
-            "subjects": ""
+            "subjects": ["정보","정보","컴시","컴시","공업","문학","수학"]
         },
         {
-            "subjects": ""
-        },
-        {
-            "subjects": ""
-        }
-    ],
-    "classHac3": [
-        {
-            "subjects": ""
-        },
-        {
-            "subjects": ""
-        },
-        {
-            "subjects": ""
-        },
-        {
-            "subjects": ""
-        },
-        {
-            "subjects": ""
-        },
-        {
-            "subjects": ""
+            "subjects": ["수학","공업","체육2","영어","빅분","빅분","빅분"]
         },
         {
             "subjects": ""
