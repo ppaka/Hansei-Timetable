@@ -26,7 +26,7 @@ const zoomLink = 'https://zoom.us/j/';
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('timetable')
+		.setName('시간표')
 		.setDescription('시간표!')
 		.addStringOption(option => option.setName("class").setDescription('원하는 반을 선택해주세요').addChoice('게임', '게임')
 			.addChoice('네보1', '네보1').addChoice('해킹1', '해킹1').addChoice('해킹2', '해킹2').setRequired(true))
