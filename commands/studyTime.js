@@ -6,7 +6,7 @@ const studyTime = ['08:40 - 09:30', '09:40 - 10:30',
     '13:20 - 14:10', '14:20 - 15:10', '15:20 - 16:10'];
 
 module.exports = {
-    data: new SlashCommandBuilder().setName('수업시간').setDescription('수업시간을 표시합니다'),
+    data: new SlashCommandBuilder().setName('time').setDescription('수업시간을 표시합니다'),
     execute(interaction) {
         const embed = new MessageEmbed().setColor('#FFA7A7').setTitle('수업시간').setDescription('『조종례는 알잘딱』').setFooter({ text: 'paka#8285' });
         embed.addField('1교시', studyTime[0])
