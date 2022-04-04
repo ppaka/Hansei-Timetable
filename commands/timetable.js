@@ -29,7 +29,7 @@ module.exports = {
 		.setName('시간표')
 		.setDescription('시간표!')
 		.addStringOption(option => option.setName("class").setDescription('원하는 반을 선택해주세요').addChoice('게임', '게임')
-			.addChoice('해킹1', '해킹1').addChoice('해킹2', '해킹2').addChoice('해킹3', '해킹3').setRequired(true))
+			.addChoice('네보1', '네보1').addChoice('해킹1', '해킹1').addChoice('해킹2', '해킹2').setRequired(true))
 		.addIntegerOption(optiontwo => optiontwo.setName("day").setDescription('원하는 요일의 시간표를 볼때 사용합니다').addChoice('월요일', 1)
 			.addChoice('화요일', 2).addChoice('수요일', 3).addChoice('목요일', 4).addChoice('금요일', 5).setRequired(false)),
 	execute(interaction) {
@@ -75,8 +75,8 @@ module.exports = {
 
 					}
 				}
-				else if (argsClass.value == '해킹1') {
-					const classData = jsonData.classHac1;
+				else if (argsClass.value == '네보1') {
+					const classData = jsonData.classNet1;
 					if (classData == null) {
 						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
 						interaction.reply({ embeds: [errorEmbed] });
@@ -87,13 +87,37 @@ module.exports = {
 							interaction.reply({ embeds: [errorEmbed] });
 						}
 						else {
-							const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('해킹보안 1-1').setDescription(`${daylist[date]} 해킹보안 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+							const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('네보 2-1').setDescription(`${daylist[date]} 네보 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
 							classData[date].subjects.forEach(subject => {
 								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
 								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
 							});
 							interaction.reply({ embeds: [embed] });
 						}
+					}
+				}
+				else if (argsClass.value == '해킹1') {
+					const classData = jsonData.classHac1;
+					if (classData == null) {
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+						interaction.reply({ embeds: [errorEmbed] });
+					}
+					else {
+						if (classData[date].subjects == "") {
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
+							interaction.reply({ embeds: [errorEmbed] });
+
+						} else {
+							const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹 2-1').setDescription(`${daylist[date]} 해킹 1반 시간표!`).setFooter({ text: 'paka#8285' });
+
+							classData[date].subjects.forEach(subject => {
+								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
+								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
+							});
+
+							interaction.reply({ embeds: [embed] });
+						}
+
 					}
 				}
 				else if (argsClass.value == '해킹2') {
@@ -106,33 +130,9 @@ module.exports = {
 						if (classData[date].subjects == "") {
 							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
 							interaction.reply({ embeds: [errorEmbed] });
-
-						} else {
-							const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹보안 1-2').setDescription(`${daylist[date]} 해킹보안 2반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-
-							classData[date].subjects.forEach(subject => {
-								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-							});
-
-							interaction.reply({ embeds: [embed] });
-						}
-
-					}
-				}
-				else if (argsClass.value == '해킹3') {
-					const classData = jsonData.classHac3;
-					if (classData == null) {
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-						interaction.reply({ embeds: [errorEmbed] });
-					}
-					else {
-						if (classData[date].subjects == "") {
-							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-							interaction.reply({ embeds: [errorEmbed] });
 						}
 						else {
-							const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹보안 1-3').setDescription(`${daylist[date]} 해킹보안 3반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+							const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹 2-2').setDescription(`${daylist[date]} 해킹 2반 시간표!`).setFooter({ text: 'paka#8285' });
 
 							classData[date].subjects.forEach(subject => {
 								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
