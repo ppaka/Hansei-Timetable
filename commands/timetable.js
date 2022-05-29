@@ -49,33 +49,44 @@ module.exports = {
 				interaction.reply({ content: '명령을 실행하는데 오류가 발생하였습니다...', ephemeral: true });
 			} else {
 				const jsonData = JSON.parse(body);
-				if (jsonData.hisTimetable[0].head[1].RESULT.CODE != "INFO-000") {
-					const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: 'paka#8285' });
-					interaction.reply({ embeds: [errorEmbed] });
+				if (!jsonData.hasOwnProperty('hisTimetable'))
+				{
+					if(jsonData.RESULT.CODE == "INFO-200"){
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: 'paka#8285' });
+						interaction.reply({ embeds: [errorEmbed] });
+					}
 				}
-				else {
-					if (!jsonData.hisTimetable[1].row) {
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
+				else{
+					if (jsonData.hisTimetable[0].head[1].RESULT.CODE != "INFO-000") {
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: 'paka#8285' });
 						interaction.reply({ embeds: [errorEmbed] });
 					}
 					else {
-						function getRandomColor() {
-							var letters = '0123456789ABCDEF';
-							var color = '#';
-							for (var i = 0; i < 6; i++) {
-								color += letters[Math.floor(Math.random() * 16)];
-							}
-							return color;
+						if (!jsonData.hisTimetable[1].row) {
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
+							interaction.reply({ embeds: [errorEmbed] });
 						}
-
-						const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[date]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-						jsonData.hisTimetable[1].row.forEach(element => {
-							embed.addField(`${element.PERIO}교시`, `${element.ITRT_CNTNT}`, false);
-						});
-
-						interaction.reply({ embeds: [embed] });
+						else {
+							function getRandomColor() {
+								var letters = '0123456789ABCDEF';
+								var color = '#';
+								for (var i = 0; i < 6; i++) {
+									color += letters[Math.floor(Math.random() * 16)];
+								}
+								return color;
+							}
+	
+							const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[date]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+							jsonData.hisTimetable[1].row.forEach(element => {
+								embed.addField(`${element.PERIO}교시`, `${element.ITRT_CNTNT}`, false);
+							});
+	
+							interaction.reply({ embeds: [embed] });
+						}
 					}
 				}
+					
+				
 			}
 		});
 	},
