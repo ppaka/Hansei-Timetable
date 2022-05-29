@@ -67,7 +67,7 @@ module.exports = {
 							interaction.reply({ embeds: [errorEmbed] });
 						}
 						else {
-							await interaction.deferReply();
+							interaction.deferReply();
 
 							function getRandomColor() {
 								var letters = '0123456789ABCDEF';
