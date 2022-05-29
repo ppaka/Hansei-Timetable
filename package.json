@@ -15,7 +15,9 @@
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.0",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.34"
+    "moment-timezone": "^0.5.34",
+    "request": "^2.88.2",
+    "undici": "^5.3.0"
   },
   "devDependencies": {
     "eslint": "^8.6.0"

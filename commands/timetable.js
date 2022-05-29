@@ -1,35 +1,20 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const wait = require('util').promisify(setTimeout);
-const fs = require('fs');
 const moment = require('moment');
+const { neisKey } = require('../config.json');
+const request = require('request');
 
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");
 
-// const subjectInfos = {
-// 	'컴그': ['컴그', '351 971 4354'], '국어': ['국어', '531 696 3430'], '영어': ['영어', '974 976 2480'], '사회': ['사회', '458 265 2826'], '국사': ['국사', '418 692 2475'], '수학': ['수학', '531 978 5696'],
-// 	'프로': ['프로', '274 223 4806'], '과학': ['과학', '314 911 3899'], '진로': ['진로', '341 183 8871'], '음악': ['음악', '373 769 7752'], '디자': ['디자', '351 971 4354'], '체육': ['체육', '517 857 7141'],
-// 	'자율': ['', ''], '정처': ['', ''], '파이썬': ['파이썬', '997 912 0043'], '파이썬1': ['파이썬', '948 102 7800'], '컴시': ['컴시', '279 718 8506'], '소양0': ['소양', '코드 몰라 ㅅㅂ'], '소양1': ['소양', '코드 몰라 ㅅㅂ'], '소양2': ['소양', '458 265 2826'], '소양3': ['소양', '418 692 2475']
-// };
-const subjectInfos = {
-	'컴그': ['컴그', ''], '국어': ['국어', ''], '영어': ['영어', '가경철'], '사회': ['사회', ''], '국사': ['국사', ''], '수학': ['수학', '안정기'],
-	'프로': ['프로', ''], '과학': ['과학', ''], '진로': ['진로', ''], '음악': ['음악', ''], '디자': ['디자', ''], '체육': ['체육', ''],
-	'자율': ['자율', ''], '정처': ['정처', ''], '파이썬': ['파이썬', ''], '파이썬1': ['파이썬', ''],  '소양0': ['소양', ''], 
-	'소양1': ['소양', ''], '소양2': ['소양', ''], '소양3': ['소양', ''], '실수': ['실수', '안정기'], '공업': ['공업', '김영희'], '자료': ['자료', '이소영'],
-	'게디': ['게디', '박윤성'], '문학': ['문학', '오성선'], '게프': ['게프', '유승찬'], '보건': ['보건', '서성민'], '체육1': ['체육', '김소은'], 
-	'체육2': ['체육', '최은석'], '정보': ['정보', '오시찬'], '자바': ['자바', '정소희'], '빅분': ['빅분', '최은석'], '컴시': ['컴시', '오시찬'],
-};
 const daylist = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-
-const zoomLink = 'https://zoom.us/j/';
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('시간표')
-		.setDescription('시간표!')
-		.addStringOption(option => option.setName("class").setDescription('원하는 반을 선택해주세요').addChoice('게임', '게임')
-			.addChoice('네보1', '네보1').addChoice('해킹1', '해킹1').addChoice('해킹2', '해킹2').setRequired(true))
+		.setDescription('나이스에서 시간표 데이터를 찾아드립니다!')
+		.addStringOption(option => option.setName("class").setDescription('원하는 반을 선택해주세요').addChoice('게임', '게임과1')
+			.addChoice('네보1', '네트워크보안과1').addChoice('해킹1', '해킹보안과1').addChoice('해킹2', '해킹보안과2').setRequired(true))
 		.addIntegerOption(optiontwo => optiontwo.setName("day").setDescription('원하는 요일의 시간표를 볼때 사용합니다').addChoice('월요일', 1)
 			.addChoice('화요일', 2).addChoice('수요일', 3).addChoice('목요일', 4).addChoice('금요일', 5).setRequired(false)),
 	execute(interaction) {
@@ -44,103 +29,51 @@ module.exports = {
 			date = argsDay.value;
 		}
 
-		fs.readFile('./timetables.json', 'utf8', (err, data) => {
-			if (err != null) {
+		var str = argsClass.value;
+		var regex = /[^0-9]/g;
+		var result = str.replace(regex, '');
+		var dddep = str.replace(result, '');
+
+		var APTP_OFCDC_SC_CODE = 'B10';
+		var SD_SCHUL_CODE = '7010911';
+		var ALL_TI_YMD = String(moment().format('YYYYMMDD'));
+		var DDDEP_NM = dddep;
+		var GRADE = 2;
+		var CLASS_NM = result;
+		var reqUrl = `https://open.neis.go.kr/hub/hisTimetable?KEY=${neisKey}&Type=json&ATPT_OFCDC_SC_CODE=${APTP_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&ALL_TI_YMD=${ALL_TI_YMD}&DDDEP_NM=${encodeURI(DDDEP_NM)}&GRADE=${GRADE}&CLASS_NM=${CLASS_NM}`
+		var reqOptions = { 'method': 'GET', 'url': reqUrl }
+
+		request(reqOptions, function (error, response, body) {
+			if (error) {
 				console.error(err);
 				interaction.reply({ content: '명령을 실행하는데 오류가 발생하였습니다...', ephemeral: true });
 			} else {
-				const jsonData = JSON.parse(data);
-
-				if (argsClass.value == '게임') {
-					const classData = jsonData.classGame;
-
-					if (classData == null) {
+				const jsonData = JSON.parse(body);
+				if (jsonData.hisTimetable[0].head[1].RESULT.CODE != "INFO-000") {
+					const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: 'paka#8285' });
+					interaction.reply({ embeds: [errorEmbed] });
+				}
+				else {
+					if (!jsonData.hisTimetable[1].row) {
 						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
 						interaction.reply({ embeds: [errorEmbed] });
 					}
 					else {
-						if (classData[date].subjects == "") {
-							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
-							interaction.reply({ embeds: [errorEmbed] });
-						}
-						else {
-							const embed = new MessageEmbed().setColor('#FFB2D9').setTitle('게임과 2-1').setDescription(`${daylist[date]} 게임 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-							classData[date].subjects.forEach(subject => {
-								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-							});
-
-							interaction.reply({ embeds: [embed] });
+						function getRandomColor() {
+							var letters = '0123456789ABCDEF';
+							var color = '#';
+							for (var i = 0; i < 6; i++) {
+								color += letters[Math.floor(Math.random() * 16)];
+							}
+							return color;
 						}
 
-					}
-				}
-				else if (argsClass.value == '네보1') {
-					const classData = jsonData.classNet1;
-					if (classData == null) {
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-						interaction.reply({ embeds: [errorEmbed] });
-					}
-					else {
-						if (classData[date].subjects == "") {
-							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-							interaction.reply({ embeds: [errorEmbed] });
-						}
-						else {
-							const embed = new MessageEmbed().setColor('#B5B2FF').setTitle('네보 2-1').setDescription(`${daylist[date]} 네보 1반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
-							classData[date].subjects.forEach(subject => {
-								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-							});
-							interaction.reply({ embeds: [embed] });
-						}
-					}
-				}
-				else if (argsClass.value == '해킹1') {
-					const classData = jsonData.classHac1;
-					if (classData == null) {
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-						interaction.reply({ embeds: [errorEmbed] });
-					}
-					else {
-						if (classData[date].subjects == "") {
-							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-							interaction.reply({ embeds: [errorEmbed] });
+						const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[date]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+						jsonData.hisTimetable[1].row.forEach(element => {
+							embed.addField(`${element.PERIO}교시`, `${element.ITRT_CNTNT}`, false);
+						});
 
-						} else {
-							const embed = new MessageEmbed().setColor('#CEF279').setTitle('해킹 2-1').setDescription(`${daylist[date]} 해킹 1반 시간표!`).setFooter({ text: 'paka#8285' });
-
-							classData[date].subjects.forEach(subject => {
-								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-							});
-
-							interaction.reply({ embeds: [embed] });
-						}
-
-					}
-				}
-				else if (argsClass.value == '해킹2') {
-					const classData = jsonData.classHac2;
-					if (classData == null) {
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-						interaction.reply({ embeds: [errorEmbed] });
-					}
-					else {
-						if (classData[date].subjects == "") {
-							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다');
-							interaction.reply({ embeds: [errorEmbed] });
-						}
-						else {
-							const embed = new MessageEmbed().setColor('#FFC19E').setTitle('해킹 2-2').setDescription(`${daylist[date]} 해킹 2반 시간표!`).setFooter({ text: 'paka#8285' });
-
-							classData[date].subjects.forEach(subject => {
-								embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}`, false);
-								// embed.addField(subjectInfos[subject][0], `${subjectInfos[subject][1]}\n${zoomLink + subjectInfos[subject][1].replaceAll(' ', '')}`, false);
-							});
-
-							interaction.reply({ embeds: [embed] });
-						}
+						interaction.reply({ embeds: [embed] });
 					}
 				}
 			}
