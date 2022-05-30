@@ -40,8 +40,6 @@ module.exports = {
 			ymd = String(argsDate.value);
 		}
 
-		console.log(ymd);
-
 		var str = argsClass.value;
 		var regex = /[^0-9]/g;
 		var result = str.replace(regex, '');
