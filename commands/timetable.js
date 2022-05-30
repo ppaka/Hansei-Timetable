@@ -24,10 +24,15 @@ module.exports = {
 		const argsDay = interaction.options["_hoistedOptions"].filter((object) => {
 			return object['name'] === 'day'
 		})[0];
+		var ymd = String(moment().format('YYYYMMDD'));
+
 		var date = moment().weekday();
 		if (argsDay != null) {
 			date = argsDay.value;
+			ymd = String(moment().weekday(date).format('YYYYMMDD'));
 		}
+
+		console.log(ymd);
 
 		var str = argsClass.value;
 		var regex = /[^0-9]/g;
@@ -36,7 +41,7 @@ module.exports = {
 
 		var APTP_OFCDC_SC_CODE = 'B10';
 		var SD_SCHUL_CODE = '7010911';
-		var ALL_TI_YMD = String(moment().format('YYYYMMDD'));
+		var ALL_TI_YMD = ymd;
 		var DDDEP_NM = dddep;
 		var GRADE = 2;
 		var CLASS_NM = result;
@@ -54,18 +59,18 @@ module.exports = {
 				if (!jsonData.hasOwnProperty('hisTimetable'))
 				{
 					if(jsonData.RESULT.CODE == "INFO-200"){
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: 'paka#8285' });
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: `YMD:${ymd} / paka#8285` });
 						await interaction.editReply({ embeds: [errorEmbed] });
 					}
 				}
 				else{
 					if (jsonData.hisTimetable[0].head[1].RESULT.CODE != "INFO-000") {
-						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: 'paka#8285' });
+						const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('나이스에서 데이터를 불러올 수 없습니다').setFooter({ text: `YMD:${ymd} / paka#8285` });
 						await interaction.editReply({ embeds: [errorEmbed] });
 					}
 					else {
 						if (!jsonData.hisTimetable[1].row) {
-							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: 'paka#8285' });
+							const errorEmbed = new MessageEmbed().setColor('#FF0000').setTitle('오류').setDescription('시간표 데이터가 존재하지 않습니다').setFooter({ text: `YMD:${ymd} / paka#8285` });
 							await interaction.editReply({ embeds: [errorEmbed] });
 						}
 						else {
@@ -78,7 +83,7 @@ module.exports = {
 								return color;
 							}
 	
-							const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[date]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: 'paka#8285' });
+							const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[date]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: `YMD:${ymd} / paka#8285` });
 							jsonData.hisTimetable[1].row.forEach(element => {
 								embed.addField(`${element.PERIO}교시`, `${element.ITRT_CNTNT}`, false);
 							});
