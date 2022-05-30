@@ -15,21 +15,29 @@ module.exports = {
 		.setDescription('나이스에서 시간표 데이터를 찾아드립니다!')
 		.addStringOption(option => option.setName("class").setDescription('원하는 반을 선택해주세요').addChoice('게임', '게임과1')
 			.addChoice('네보1', '네트워크보안과1').addChoice('해킹1', '해킹보안과1').addChoice('해킹2', '해킹보안과2').setRequired(true))
-		.addIntegerOption(optiontwo => optiontwo.setName("day").setDescription('원하는 요일의 시간표를 볼때 사용합니다').addChoice('월요일', 1)
-			.addChoice('화요일', 2).addChoice('수요일', 3).addChoice('목요일', 4).addChoice('금요일', 5).setRequired(false)),
+		.addIntegerOption(optiontwo => optiontwo.setName("weekday").setDescription('원하는 요일의 시간표를 볼때 사용합니다').addChoice('월요일', 1)
+			.addChoice('화요일', 2).addChoice('수요일', 3).addChoice('목요일', 4).addChoice('금요일', 5).setRequired(false))
+			.addIntegerOption(optionthree => optionthree.setName("date").setDescription('원하는 날짜의 시간표를 볼때 사용합니다 (입력예시: 20220505)').setRequired(false)),
 			async execute(interaction) {
 		const argsClass = interaction.options["_hoistedOptions"].filter((object) => {
 			return object['name'] === 'class'
 		})[0];
-		const argsDay = interaction.options["_hoistedOptions"].filter((object) => {
-			return object['name'] === 'day'
+		const argsWeekday = interaction.options["_hoistedOptions"].filter((object) => {
+			return object['name'] === 'weekday'
+		})[0];
+		const argsDate = interaction.options["_hoistedOptions"].filter((object) => {
+			return object['name'] === 'date'
 		})[0];
 		var ymd = String(moment().format('YYYYMMDD'));
 
-		var date = moment().weekday();
-		if (argsDay != null) {
-			date = argsDay.value;
-			ymd = String(moment().weekday(date).format('YYYYMMDD'));
+		var weekday = moment().weekday();
+		if (argsWeekday != null) {
+			weekday = argsWeekday.value;
+			ymd = String(moment().weekday(weekday).format('YYYYMMDD'));
+		}
+		if (argsDate != null){
+			weekday = moment(String(argsDate.value), "YYYYMMDD").weekday();
+			ymd = String(argsDate.value);
 		}
 
 		console.log(ymd);
@@ -83,7 +91,7 @@ module.exports = {
 								return color;
 							}
 	
-							const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[date]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: `YMD:${ymd} / paka#8285` });
+							const embed = new MessageEmbed().setColor(getRandomColor()).setTitle(`${DDDEP_NM} ${GRADE}-${CLASS_NM}`).setDescription(`${daylist[weekday]} ${DDDEP_NM} ${CLASS_NM}반 시간표 입니다!`).setFooter({ text: `YMD:${ymd} / paka#8285` });
 							jsonData.hisTimetable[1].row.forEach(element => {
 								embed.addField(`${element.PERIO}교시`, `${element.ITRT_CNTNT}`, false);
 							});
