@@ -1,4 +1,3 @@
-import imp
 import os
 import dotenv
 from discord import *
