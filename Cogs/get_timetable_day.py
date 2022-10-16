@@ -43,9 +43,10 @@ class get_timetable_day(commands.Cog):
 
         ymd = cur_date.strftime('%Y%m%d')
         if weekday != None:
-            if cur_date.weekday() != 0:
-                cur_date = cur_date - datetime.timedelta(days=cur_date.weekday() - weekday.value)
-                ymd = cur_date.strftime('%Y%m%d')
+            if cur_date.weekday() == 6:
+                cur_date += datetime.timedelta(weeks=1)
+            cur_date -= datetime.timedelta(days=cur_date.weekday() - weekday.value)
+            ymd = cur_date.strftime('%Y%m%d')
         if date != None:
             cur_date = datetime.datetime.strptime(str(date), '%Y%m%d')
             ymd = cur_date.strftime('%Y%m%d')
