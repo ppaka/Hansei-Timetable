@@ -16,6 +16,7 @@ dotenv.load_dotenv()
 neis_key = os.getenv('NEIS_KEY')
 daylist = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
 
+
 class get_timetable_day(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
@@ -38,24 +39,25 @@ class get_timetable_day(commands.Cog):
         app_commands.Choice(name='금요일', value=4),
     ])
     @app_commands.describe(date='원하는 날짜의 시간표를 볼때 사용합니다 (입력예시: 20220505)')
-    async def request_get(self, interaction: Interaction, sch_class: app_commands.Choice[str], weekday: Optional[app_commands.Choice[int]] = None, date: Optional[int] = None):        
+    async def request_get(self, interaction: Interaction, sch_class: app_commands.Choice[str], weekday: Optional[app_commands.Choice[int]] = None, date: Optional[int] = None):
         cur_date = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
 
         ymd = cur_date.strftime('%Y%m%d')
         if weekday != None:
-            if cur_date.weekday() == 6:
+            if cur_date.weekday() == 5 or cur_date.weekday() == 6:
                 cur_date += datetime.timedelta(weeks=1)
-            cur_date -= datetime.timedelta(days=cur_date.weekday() - weekday.value)
+            cur_date -= datetime.timedelta(
+                days=cur_date.weekday() - weekday.value)
             ymd = cur_date.strftime('%Y%m%d')
         if date != None:
             cur_date = datetime.datetime.strptime(str(date), '%Y%m%d')
             ymd = cur_date.strftime('%Y%m%d')
-        
+
         dddep = re.sub(r'[0-9]+', '', sch_class.value)
         class_num = sch_class.value.replace(dddep, '')
 
-        APTP_OFCDC_SC_CODE = 'B10';
-        SD_SCHUL_CODE = '7010911';
+        APTP_OFCDC_SC_CODE = 'B10'
+        SD_SCHUL_CODE = '7010911'
         ALL_TI_YMD = ymd
         DDDEP_NM = dddep
         GRADE = 2
@@ -71,12 +73,12 @@ class get_timetable_day(commands.Cog):
             print("Timeout Error : ", errd)
             await interaction.response.edit_message(content='에러 발생! [Timeout Error]')
             return
-            
+
         except requests.exceptions.ConnectionError as errc:
             print("Error Connecting : ", errc)
             await interaction.response.edit_message(content='에러 발생! [Connection Error]')
             return
-            
+
         except requests.exceptions.HTTPError as errb:
             print("Http Error : ", errb)
             await interaction.response.edit_message(content='에러 발생! [Http Error]')
@@ -91,28 +93,34 @@ class get_timetable_day(commands.Cog):
         json_data = dict(req.json())
         if 'hisTimetable' not in json_data.keys():
             if json_data['RESULT']['CODE'] == 'INFO-200':
-                error_embed = discord.Embed(title='오류 발생!', color=0xFF0000, description='나이스에서 데이터를 불러올 수 없습니다').add_field(name='에러코드', value='INFO-200').set_footer(text=f'YMD:{ymd} / paka#8285')
+                error_embed = discord.Embed(title='오류 발생!', color=0xFF0000, description='나이스에서 데이터를 불러올 수 없습니다').add_field(
+                    name='에러코드', value='INFO-200').set_footer(text=f'YMD:{ymd} / paka#8285')
                 await interaction.edit_original_response(embed=error_embed)
             return
-        
+
         if json_data['hisTimetable'][0]['head'][1]['RESULT']['CODE'] != 'INFO-000':
-            error_embed = discord.Embed(title='오류 발생!', color=0xFF0000, description='나이스에서 데이터를 불러올 수 없습니다').add_field(name='에러코드', value=f"{json_data['hisTimetable'][0]['head'][1]['RESULT']['CODE']}").set_footer(text=f'YMD:{ymd} / paka#8285')
+            error_embed = discord.Embed(title='오류 발생!', color=0xFF0000, description='나이스에서 데이터를 불러올 수 없습니다').add_field(
+                name='에러코드', value=f"{json_data['hisTimetable'][0]['head'][1]['RESULT']['CODE']}").set_footer(text=f'YMD:{ymd} / paka#8285')
             await interaction.edit_original_response(embed=error_embed)
             return
 
         if 'row' not in dict(json_data['hisTimetable'][1]).keys():
-            error_embed = discord.Embed(title='오류 발생!', color=0xFF0000, description='시간표 데이터를 불러올 수 없습니다').set_footer(text=f'YMD:{ymd} / paka#8285')
+            error_embed = discord.Embed(title='오류 발생!', color=0xFF0000, description='시간표 데이터를 불러올 수 없습니다').set_footer(
+                text=f'YMD:{ymd} / paka#8285')
             await interaction.edit_original_response(embed=error_embed)
             return
-        
+
         letters = '0123456789ABCDEF'
         color = '0x'
         for i in range(0, 6):
             color += letters[random.randrange(0, 16)]
-        embed = discord.Embed(title=f'{DDDEP_NM} {GRADE}-{CLASS_NM}', color=int(color, 0), description=f'{daylist[cur_date.weekday()]} {DDDEP_NM} {CLASS_NM}반 시간표를 보여드릴게요!').set_footer(text=f'YMD:{ymd} / paka#8285')
+        embed = discord.Embed(title=f'{DDDEP_NM} {GRADE}-{CLASS_NM}', color=int(
+            color, 0), description=f'{daylist[cur_date.weekday()]} {DDDEP_NM} {CLASS_NM}반 시간표를 보여드릴게요!').set_footer(text=f'YMD:{ymd} / paka#8285')
         for e in json_data['hisTimetable'][1]['row']:
-            embed.add_field(name=f"{e['PERIO']}교시", value=f"{e['ITRT_CNTNT']}", inline=False)
+            embed.add_field(name=f"{e['PERIO']}교시",
+                            value=f"{e['ITRT_CNTNT']}", inline=False)
         await interaction.edit_original_response(embed=embed)
+
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(
