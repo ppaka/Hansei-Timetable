@@ -53,7 +53,7 @@ class get_timetable_day(commands.Cog):
         app_commands.Choice(name='금요일', value=4),
     ])
     @app_commands.describe(date='원하는 날짜의 시간표를 볼때 사용합니다. (입력예시: 20220505)')
-    async def request_get(self, interaction: Interaction, grade: int, dddep_name: app_commands.Choice[str], class_name: int = 1, weekday: Optional[app_commands.Choice[int]] = None, date: Optional[int] = None):
+    async def request_get(self, interaction: Interaction, grade: int, dddep_name: app_commands.Choice[str], class_name: int = 1, weekday: Optional[app_commands.Choice[int]] = None, date: Optional[int] = None) -> None:
         cur_date = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
 
         ymd = cur_date.strftime('%Y%m%d')
@@ -67,6 +67,10 @@ class get_timetable_day(commands.Cog):
             cur_date = datetime.datetime.strptime(str(date), '%Y%m%d')
             ymd = cur_date.strftime('%Y%m%d')
 
+        if dddep_name == None:
+            error_embed = discord.Embed(title='으엑, 에러가…', color=0xFF0000, description='학과명이 작성되어지지 않았어요!').set_footer(text=f'YMD:{ymd} / paka#8285')
+            await interaction.response.send_message(embed=error_embed)
+            return
         dddep = re.sub(r'[0-9]+', '', dddep_name.value)
 
         APTP_OFCDC_SC_CODE = 'B10'
