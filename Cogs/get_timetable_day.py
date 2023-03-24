@@ -17,6 +17,7 @@ neis_key = os.getenv('NEIS_KEY')
 daylist = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
 
 
+
 class get_timetable_day(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
@@ -52,7 +53,7 @@ class get_timetable_day(commands.Cog):
         app_commands.Choice(name='금요일', value=4),
     ])
     @app_commands.describe(date='원하는 날짜의 시간표를 볼때 사용합니다. (입력예시: 20220505)')
-    async def request_get(self, interaction: Interaction, grade: int, dddep_name: Optional[app_commands.Choice[str]] = None, class_name: int = 1, weekday: Optional[app_commands.Choice[int]] = None, date: Optional[int] = None):
+    async def request_get(self, interaction: Interaction, grade: int, dddep_name: app_commands.Choice[str], class_name: int = 1, weekday: Optional[app_commands.Choice[int]] = None, date: Optional[int] = None):
         cur_date = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
 
         ymd = cur_date.strftime('%Y%m%d')
