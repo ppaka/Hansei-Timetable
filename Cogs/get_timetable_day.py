@@ -140,7 +140,7 @@ class get_timetable_day(commands.Cog):
             color, 0), description=f'{daylist[cur_date.weekday()]} {DDDEP_NM} {GRADE}학년 {CLASS_NM}반 시간표를 찾아왔어요!').set_footer(text=f'YMD:{ymd} / paka#8285')
         for e in json_data['hisTimetable'][1]['row']:
             embed.add_field(name=f"{e['PERIO']}교시",
-                            value=f"{e['ITRT_CNTNT'].strip()}", inline=False)
+                            value=f"{e['ITRT_CNTNT'].replace('* ', '').strip()}", inline=False)
         await interaction.edit_original_response(embed=embed)
 
 
