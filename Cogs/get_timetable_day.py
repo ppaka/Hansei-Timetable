@@ -6,14 +6,13 @@ from discord import Interaction
 import datetime
 import pytz
 import re
-import dotenv
 import os
 from urllib import parse
 import requests
 import random
 
-dotenv.load_dotenv()
-neis_key = os.getenv('NEIS_KEY')
+
+neis_key = os.environ['NEIS_KEY']
 daylist = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
 
 

@@ -1,14 +1,12 @@
 import os
-import dotenv
 from discord import *
 from discord import Intents
 from discord.ext import commands
 from discord import Game
 from discord import Status
 
-dotenv.load_dotenv()
-APP_ID = os.getenv('APPLICATION_ID')
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+APP_ID = '818800581391941649'
+DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 
 intents = Intents.default()
 intents.message_content = True
