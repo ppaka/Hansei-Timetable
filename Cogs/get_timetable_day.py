@@ -12,7 +12,7 @@ import requests
 import random
 
 
-neis_key = os.environ['NEIS_KEY']
+NEIS_KEY = os.environ['NEIS_KEY']
 daylist = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
 
 
@@ -78,7 +78,7 @@ class get_timetable_day(commands.Cog):
         DDDEP_NM = dddep
         GRADE = grade
         CLASS_NM = class_name
-        req_url = f'https://open.neis.go.kr/hub/hisTimetable?KEY={neis_key}&Type=json&ATPT_OFCDC_SC_CODE={APTP_OFCDC_SC_CODE}&SD_SCHUL_CODE={SD_SCHUL_CODE}&ALL_TI_YMD={ALL_TI_YMD}&DDDEP_NM={parse.quote(DDDEP_NM)}&GRADE={GRADE}&CLASS_NM={CLASS_NM}'
+        req_url = f'https://open.neis.go.kr/hub/hisTimetable?KEY={NEIS_KEY}&Type=json&ATPT_OFCDC_SC_CODE={APTP_OFCDC_SC_CODE}&SD_SCHUL_CODE={SD_SCHUL_CODE}&ALL_TI_YMD={ALL_TI_YMD}&DDDEP_NM={parse.quote(DDDEP_NM)}&GRADE={GRADE}&CLASS_NM={CLASS_NM}'
 
         await interaction.response.defer(ephemeral=False)
 
