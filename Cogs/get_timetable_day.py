@@ -67,7 +67,7 @@ class get_timetable_day(commands.Cog):
             ymd = cur_date.strftime('%Y%m%d')
 
         if dddep_name == None:
-            error_embed = discord.Embed(title='으엑, 에러가…', color=0xFF0000, description='학과명이 작성되어지지 않았어요!').set_footer(text=f'YMD:{ymd} / paka#8285')
+            error_embed = discord.Embed(title='으엑, 에러가…', color=0xFF0000, description='학과명이 작성되어지지 않았어요!').set_footer(text=f'YMD:{ymd} / ppaka')
             await interaction.response.send_message(embed=error_embed)
             return
         dddep = re.sub(r'[0-9]+', '', dddep_name.value)
@@ -115,19 +115,19 @@ class get_timetable_day(commands.Cog):
         if 'hisTimetable' not in json_data.keys():
             if json_data['RESULT']['CODE'] == 'INFO-200':
                 error_embed = discord.Embed(title='으엑, 에러가…', color=0xFF0000, description='해당하는 데이터가 없습니다.').add_field(
-                    name='에러코드', value='INFO-200').set_footer(text=f'YMD:{ymd} / paka#8285')
+                    name='에러코드', value='INFO-200').set_footer(text=f'YMD:{ymd} / ppaka')
                 await interaction.edit_original_response(embed=error_embed)
             return
 
         if json_data['hisTimetable'][0]['head'][1]['RESULT']['CODE'] != 'INFO-000':
             error_embed = discord.Embed(title='으엑, 에러가…', color=0xFF0000, description='나이스에서 데이터를 불러올 수 없습니다.').add_field(
-                name='에러코드', value=f"{json_data['hisTimetable'][0]['head'][1]['RESULT']['CODE']}").set_footer(text=f'YMD:{ymd} / paka#8285')
+                name='에러코드', value=f"{json_data['hisTimetable'][0]['head'][1]['RESULT']['CODE']}").set_footer(text=f'YMD:{ymd} / ppaka')
             await interaction.edit_original_response(embed=error_embed)
             return
 
         if 'row' not in dict(json_data['hisTimetable'][1]).keys():
             error_embed = discord.Embed(title='으엑, 에러가⋯', color=0xFF0000, description='시간표 데이터를 정상적으로 불러올 수 없습니다. [내부 구문 문제]').set_footer(
-                text=f'YMD:{ymd} / paka#8285')
+                text=f'YMD:{ymd} / ppaka')
             await interaction.edit_original_response(embed=error_embed)
             return
 
@@ -136,7 +136,7 @@ class get_timetable_day(commands.Cog):
         for i in range(0, 6):
             color += letters[random.randrange(0, 16)]
         embed = discord.Embed(title=f'{DDDEP_NM} {GRADE}-{CLASS_NM}', color=int(
-            color, 0), description=f'{daylist[cur_date.weekday()]} {DDDEP_NM} {GRADE}학년 {CLASS_NM}반 시간표를 찾아왔어요!').set_footer(text=f'YMD:{ymd} / paka#8285')
+            color, 0), description=f'{daylist[cur_date.weekday()]} {DDDEP_NM} {GRADE}학년 {CLASS_NM}반 시간표를 찾아왔어요!').set_footer(text=f'YMD:{ymd} / ppaka')
         for e in json_data['hisTimetable'][1]['row']:
             embed.add_field(name=f"{e['PERIO']}교시",
                             value=f"{e['ITRT_CNTNT'].replace('* ', '').strip()}", inline=False)
